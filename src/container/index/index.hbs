@@ -109,40 +109,28 @@
 		</section>
 	</div>
 
+	{{!-- <form method="POST" action="/product-create">
+		<div class="form__content">
+			<div class="form__row">
+				<div class="form__field">
+					<label for="name" class="form__label">Назва товару</label>
+					<input type="text" name="name" class="form__input">
+					<button class="form__button">Створити товар</button>
+				</div>
+			</div>
+	</form> --}}
 
 	<section>
-		{{!-- {{> ../components/card}} --}}
-		<div class="form">
-			<h1 class="form__title">Список товарів</h1>
-			<div class="user-list">
-				{{#with data.products}}
-				{{#if isEmpty}}
-				<mark>пустий</mark>
-				{{else}}
-				<div>
-					{{#each list2}}
-					<div class="card2">
-						<h2 class="form__title">{{name}}</h2>
-						<p>{{description}}</p>
-						<p>ID: {{id}}</p>
-						<div class="block2">
-							<p>{{price}}грн</p>
-							<a href="/product-edit?id={{id}}">Редагувати</a>
-						</div>
-					</div>
-					{{/each}}
-				</div>
-				{{/if}}
-				{{/with}}
-			</div>
-		</div>
+		<div class="product">{{> product-card}}</div>
+
 	</section>
+
 
 	<div class="card">
 		<section>
 			<div class="form">
 				<h1 class="form__title">Інформація про товар</h1>
-				<form method="POST" action="/product-edit" action="/product-delete">
+				<form method="POST" action="/product-edit">
 					<div class="form__content">
 						<div class="block2">
 							<div class="form__field">
@@ -164,8 +152,9 @@
 							<div class="subscribe">Відображується у картці товару</div>
 						</div>
 						<div class="block2">
-							<button class="form__button">Відправити</button>
-							<button class="form__button-red" href="/product-delete?id={{id}}">Видалити товар</button>
+							<button class="form__button">Редагувати товар</button>
+							<button class="form__button-red" formmethod="POST" formaction="/product-delete">Видалити
+								товар</button>
 						</div>
 					</div>
 				</form>

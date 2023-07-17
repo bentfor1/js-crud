@@ -110,9 +110,16 @@ class Product {
   }
 
   static deleteById(id) {
-    this.#list = this.#list.filter(
-      (product) => product.id !== id,
+    const index = this.#list.findIndex(
+      (product) => product.id === id,
     )
+
+    if (index !== -1) {
+      this.#list.splice(index, 1)
+      return true
+    } else {
+      return false
+    }
   }
 }
 
@@ -273,7 +280,7 @@ router.post('/product-edit', function (req, res) {
   } else {
     res.render('product-edit', {
       style: 'success-info',
-      info: 'Товар не знайдено',
+      info: 'Товар ваш не знайдено',
       product: null,
     })
   }
@@ -281,22 +288,19 @@ router.post('/product-edit', function (req, res) {
 
 // ================================================================
 router.post('/product-delete', function (req, res) {
-  const { name, price, description, id } = req.body
-  const product = Product.getById(Number(id))
+  const { id } = req.body
+  const productId = Number(id)
+  const product = Product.getById(productId)
 
   if (product !== undefined) {
-    Product.deleteById(product, {
-      name,
-      price,
-      description,
-    })
-    res.render('product-delete', {
+    Product.deleteById(productId)
+    res.render('success-info', {
       style: 'success-info',
       info: 'Товар видалено',
       product: null,
     })
   } else {
-    res.render('product-delete', {
+    res.render('success-info', {
       style: 'success-info',
       info: 'Товар не знайдено',
       product: null,
@@ -306,11 +310,12 @@ router.post('/product-delete', function (req, res) {
 
 router.get('/product-delete', function (req, res) {
   const { id } = req.query
-  const product = Product.getById(Number(id))
+  const productId = Number(id)
+  const product = Product.getById(productId)
 
-  if (product) {
-    Product.deleteById(Number(id))
-    res.redirect('/') // Redirect to the homepage or the desired page after deletion
+  if (product !== undefined) {
+    Product.deleteById(productId)
+    res.redirect('/') // Перенаправлення на головну сторінку або на бажану сторінку після видалення
   } else {
     res.render('product-delete', {
       style: 'success-info',
