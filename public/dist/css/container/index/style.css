@@ -44,4 +44,101 @@ main {
   padding-bottom: 5px;
 }
 
+.form__titles {
+  font-size: 36px;
+  color: darkblue;
+  font-weight: bold;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 1000px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form__title {
+  color: grey;
+  font-size: 18px;
+}
+
+.form__button {
+  border: none;
+  outline: none;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form__button:hover {
+  opacity: 0.7;
+}
+
+.block2 {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.block2 > div {
+  flex-grow: 1;
+}
+
+.card2 {
+  width: 300px;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.subscribe {
+  font-size: 11px;
+  color: dimgray;
+}
+
+.form__button-blue {
+  border: none;
+  outline: none;
+  display: inline-block;
+  padding: 8px;
+  color: yellow;
+  background-color: blue;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form__button-blue:hover {
+  opacity: 0.7;
+}
+
+.form__button-red {
+  border: none;
+  outline: none;
+  display: inline-block;
+  padding: 8px;
+  color: yellowgreen;
+  background-color: red;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form__button-red:hover {
+  opacity: 0.7;
+}
+
 /*# sourceMappingURL=style.css.map */
