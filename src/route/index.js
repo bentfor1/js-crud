@@ -57,6 +57,65 @@ class User {
   }
 }
 
+//===///===//===================///==================
+
+class Product {
+  static #list = []
+
+  constructor(name, price, description) {
+    this.id =
+      Math.floor(Math.random() * (99999 - 10000 + 1)) +
+      10000
+    this.createDate = new Date().toISOString()
+    this.name = name
+    this.price = price
+    this.description = description
+  }
+
+  static getList() {
+    return this.#list
+  }
+
+  static add(product) {
+    this.#list.push(product)
+  }
+
+  static getById(id) {
+    return this.#list.find((product) => product.id === id)
+  }
+
+  static updateById = (id, data) => {
+    const product = this.getById(id)
+
+    if (product) {
+      this.update(product, data)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  static update(product, { name, price, description }) {
+    if (name) {
+      product.name = name
+    }
+
+    if (price) {
+      product.price = price
+    }
+
+    if (description) {
+      product.description = description
+    }
+  }
+
+  static deleteById(id) {
+    this.#list = this.#list.filter(
+      (product) => product.id !== id,
+    )
+  }
+}
+
 // ================================================================
 
 // router.get Створює нам один ентпоїнт
@@ -67,6 +126,8 @@ router.get('/', function (req, res) {
 
   const list = User.getList()
 
+  const list2 = Product.getList()
+
   // ↙️ cюди вводимо назву файлу з сontainer
   res.render('index', {
     // вказуємо назву папки контейнера, в якій знаходяться наші стилі
@@ -76,6 +137,10 @@ router.get('/', function (req, res) {
       users: {
         list: User.getList(),
         isEmpty: list.length === 0,
+      },
+      products: {
+        list2: Product.getList(),
+        isEmpty: list2.length === 0,
       },
     },
   })
@@ -139,6 +204,123 @@ router.post('/user-update', function (req, res) {
 })
 
 // ================================================================
+// ================================================================
+
+router.get('/product-create', function (req, res) {
+  const { id } = req.query
+
+  console.log(id)
+
+  Product.update(Number(id))
+
+  res.render('product-create', {
+    style: 'success-info',
+    info: 'Товар отримано',
+  })
+})
+
+// ================================================================
+
+router.post('/product-create', function (req, res) {
+  const { name, price, description } = req.body
+
+  const product = new Product(name, price, description)
+
+  Product.add(product)
+
+  console.log(Product.getList())
+
+  res.render('product-create', {
+    style: 'success-info',
+    info: 'Товар створено',
+  })
+})
+
+// ================================================================
+
+router.get('/product-edit', function (req, res) {
+  const { id } = req.query
+  const product = Product.getById(Number(id))
+
+  if (product) {
+    res.render('product-edit', {
+      style: 'success-info',
+      info: 'Товар отримано',
+      product: product,
+    })
+  } else {
+    res.render('product-edit', {
+      style: 'success-info',
+      info: 'Товар не знайдено',
+      product: null,
+    })
+  }
+})
+
+// ================================================================
+
+router.post('/product-edit', function (req, res) {
+  const { name, price, description, id } = req.body
+  const product = Product.getById(Number(id))
+
+  if (product) {
+    Product.update(product, { name, price, description })
+    res.render('product-edit', {
+      style: 'success-info',
+      info: 'Дані товару оновлено',
+      product: product,
+    })
+  } else {
+    res.render('product-edit', {
+      style: 'success-info',
+      info: 'Товар не знайдено',
+      product: null,
+    })
+  }
+})
+
+// ================================================================
+router.post('/product-delete', function (req, res) {
+  const { name, price, description, id } = req.body
+  const product = Product.getById(Number(id))
+
+  if (product !== undefined) {
+    Product.deleteById(product, {
+      name,
+      price,
+      description,
+    })
+    res.render('product-delete', {
+      style: 'success-info',
+      info: 'Товар видалено',
+      product: null,
+    })
+  } else {
+    res.render('product-delete', {
+      style: 'success-info',
+      info: 'Товар не знайдено',
+      product: null,
+    })
+  }
+})
+
+router.get('/product-delete', function (req, res) {
+  const { id } = req.query
+  const product = Product.getById(Number(id))
+
+  if (product) {
+    Product.deleteById(Number(id))
+    res.redirect('/') // Redirect to the homepage or the desired page after deletion
+  } else {
+    res.render('product-delete', {
+      style: 'success-info',
+      info: 'Товар не не знайдено',
+      product: null,
+    })
+  }
+})
+
+//==================================================================
 
 // Підключаємо роутер до бек-енду
 module.exports = router
