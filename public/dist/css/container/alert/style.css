@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.card {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 32px;
+  gap: 48px;
+  border: solid 2px gray;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 1000px;
+}
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.card__title {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.card__button {
+  display: flex;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 40px;
+  border: 4px solid #a5c312; /* Колір рамки кнопки */
+  border-radius: 5px; /* Закругленість кутів кнопки */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Плавна анімація зміни кольору фону при наведенні курсору */
+}
+
+.card__button:hover {
+  background-color: #0056b3; /* Змінюємо колір фону кнопки при наведенні курсору */
+}
+
+/* Стилі для стану "натиснення" (коли кнопку натискають) */
+.card__button:active {
+  background-color: #003980; /* Змінюємо колір фону кнопки при натисканні */
+}
+
+.card__button__blue {
+  color: #ffffff; /* Колір тексту кнопки */
+  background-color: #007bff; /* Колір фону кнопки */
+}
+
+/*# sourceMappingURL=style.css.map */
