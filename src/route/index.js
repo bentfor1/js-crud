@@ -19,20 +19,25 @@ class Product {
     this.price = price
   }
 
-  static add = (
-    img,
-    title,
-    description,
-    category,
-    price,
-  ) => {
-    const newProduct = new Product(
-      img,
-      title,
-      description,
-      category,
-      price,
-    )
+  //   static add = (
+  //     img,
+  //     title,
+  //     description,
+  //     category,
+  //     price,
+  //   ) => {
+  //     const newProduct = new Product(
+  //       img,
+  //       title,
+  //       description,
+  //       category,
+  //       price,
+  //     )
+  //     this.#list.push(newProduct)
+  //   }
+
+  static add = (...data) => {
+    const newProduct = new Product(...data)
     this.#list.push(newProduct)
   }
 
@@ -179,9 +184,9 @@ router.get('/purchase-product', function (req, res) {
 // ↙️ тут вводимо шлях (PATH) до сторінки
 router.get('/purchase-create', function (req, res) {
   const id = Number(req.query.id)
-  const amaunt = Number(req.body.amaunt)
+  const amount = Number(req.body.amount)
 
-  console.log(id, amaunt)
+  console.log(id, amount)
   // res.render генерує нам HTML сторінку
 
   // ↙️ cюди вводимо назву файлу з сontainer

@@ -11,20 +11,23 @@
 			<img src="{{img}}" alt="title" class="product-info__image">
 			<h2 class="product-info__title">{{title}}</h2>
 			<p class="product-info__subtitle">{{description}}</p>
+
+
+			{{> divider}}
+
+			{{#each category}}
+			<span class="product-info__category product-info__category--{{id}}">{{text}}</span>
+			{{/each}}
+
+
+			{{> divider}}
+
+			{{> field label="Кількість" type="number" name="amaunt" value="1"}}
+
+			<button class="product-info__button">Купити зараз: {{price}}грн </button>
 		</div>
-
-		{{> divider}}
-
-		{{#each category}}
-		<span class="product-info__category product-info__category--{{id}}">{{text}}</span>
-		{{/each}}
-
-
-		{{> divider}}
-
-		{{> field label="Кількість" type="number" name="amaunt" value="1"}}
-
-		<button class="product-info__button">Купити зараз: {{price}}грн </button>
 	</form>
 	{{/with}}
+
+	{{> heading title="Інші товари" info="Комп'ютери та ноутбуки"}}
 </main>
