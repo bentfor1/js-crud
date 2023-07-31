@@ -10,13 +10,21 @@ class Product {
 
   static #count = 0
 
-  constructor(img, title, description, category, price) {
+  constructor(
+    img,
+    title,
+    description,
+    category,
+    price,
+    amount = 0,
+  ) {
     this.id = ++Product.#count // Генеруємо унікальний id для товару
     this.img = img
     this.title = title
     this.description = description
     this.category = category
     this.price = price
+    this.amount = amount
   }
 
   //   static add = (
@@ -72,6 +80,7 @@ Product.add(
     { id: 2, text: `Топ продажів` },
   ],
   27000,
+  10,
 )
 
 Product.add(
@@ -80,6 +89,7 @@ Product.add(
   `SMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 1, text: `` }],
   20000,
+  10,
 )
 
 Product.add(
@@ -88,6 +98,7 @@ Product.add(
   `DMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 2, text: `Топ продажів` }],
   28000,
+  11,
 )
 
 Product.add(
@@ -96,6 +107,7 @@ Product.add(
   `DMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 2, text: `Топ продажів` }],
   28000,
+  12,
 )
 
 Product.add(
@@ -104,6 +116,7 @@ Product.add(
   `DMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 2, text: `Топ продажів` }],
   28000,
+  15,
 )
 
 Product.add(
@@ -112,6 +125,7 @@ Product.add(
   `DMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 2, text: `Топ продажів` }],
   28000,
+  1,
 )
 // ================================================================
 
@@ -187,6 +201,58 @@ router.get('/purchase-create', function (req, res) {
   const amount = Number(req.body.amount)
 
   console.log(id, amount)
+  // res.render генерує нам HTML сторінку
+
+  // ↙️ cюди вводимо назву файлу з сontainer
+  res.render('purchase-product', {
+    // вказуємо назву папки контейнера, в якій знаходяться наші стилі
+    style: 'purchase-product',
+
+    data: {
+      list: Product.getRandomList(id),
+      product: Product.getById(id),
+    },
+  })
+  // ↑↑ сюди вводимо JSON дані
+})
+
+// ================================================================
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+router.post('/purchase-create', function (req, res) {
+  const id = Number(req.query.id)
+  const amount = Number(req.body.amount)
+
+  if (amount < 1) {
+    return res.render('alert', {
+      // вказуємо назву папки контейнера, в якій знаходяться наші стилі
+      style: 'alert',
+
+      data: {
+        message: 'Помилка',
+        info: 'Некоректна кількість товару',
+        link: `/purchase-product?id=${id}`,
+      },
+    })
+  }
+
+  const product = Product.getById(id)
+
+  if (product.amount < 1) {
+    return res.render('alert', {
+      // вказуємо назву папки контейнера, в якій знаходяться наші стилі
+      style: 'alert',
+
+      data: {
+        message: 'Помилка',
+        info: 'Такої кількості товару немає в наявності',
+        link: `/purchase-product?id=${id}`,
+      },
+    })
+  }
+
+  console.log(product, amount)
+
   // res.render генерує нам HTML сторінку
 
   // ↙️ cюди вводимо назву файлу з сontainer

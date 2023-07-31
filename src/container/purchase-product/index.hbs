@@ -1,9 +1,5 @@
-{{!--
-
-
---}}
 <main class="main">
-	{{> heading title="Іформація про товар" info="Комп'ютери та ноутбуки"}}
+	{{> heading title="Іформація про товар"}}
 
 	{{#with data.product}}
 	<form method="POST" action="/purchase-create?id={{id}}">
@@ -22,12 +18,24 @@
 
 			{{> divider}}
 
-			{{> field label="Кількість" type="number" name="amaunt" value="1"}}
+			{{> field label="Кількість" type="number" name="amount" value="1"}}
 
 			<button class="product-info__button">Купити зараз: {{price}}грн </button>
+
 		</div>
+
 	</form>
+
 	{{/with}}
 
+
+
 	{{> heading title="Інші товари" info="Комп'ютери та ноутбуки"}}
+
+	<div class="product-list">
+		{{#each data.list}}
+		{{> purchase-product data=this}}
+		{{/each}}
+	</div>
+
 </main>

@@ -158,8 +158,8 @@
 }
 
 .product-info__button {
-  background-color: s-color(main);
-  color: white;
+  background-color: blueviolet;
+  color: rgb(41, 196, 204);
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
