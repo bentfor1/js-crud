@@ -1,5 +1,5 @@
 @use '../../lib/service.scss' as s;
-
+@use '../../component/button/style.scss' as button;
 .product-card {
   border-radius: 10px;
   border: 1px solid s.color('border');

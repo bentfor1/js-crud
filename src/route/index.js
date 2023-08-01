@@ -125,8 +125,70 @@ Product.add(
   `DMD Ryzen 5 3600 (3.6-4.2 ГГц) / RAM 16 ГБ / HDD 1ТБ + SSD 480 ГБ / nVidia GeForce RTX 3050, 8ГБ / без ОД / LAN / без ОС`,
   [{ id: 2, text: `Топ продажів` }],
   28000,
-  1,
+  0,
 )
+
+class Purchase {
+  static DELIVERY_PRICE = 150
+  static #count
+  static #list = []
+
+  constructor(data, product) {
+    this.id = ++Purchase.#count
+
+    this.firstname = data.firstname
+    this.lastname = data.lastname
+
+    this.phone = data.phone
+    this.email = data.email
+
+    this.comment = data.comment || null
+
+    this.bonus = data.bonus || 0
+
+    this.promocode = data.promocode || null
+
+    this.totalPrice = data.totalPrice
+    this.productPrice = data.productPrice
+    this.deliveryPrice = data.deliveryPrice
+    this.amount = data.amount
+
+    this.product = product
+  }
+
+  static add = (...arg) => {
+    const newPurchase = new Purchase(...arg)
+
+    this.#list.push(newPurchase)
+
+    return newPurchase
+  }
+
+  static getList = () => {
+    return Purchase.#list.reverse()
+  }
+
+  static getById = (id) => {
+    return Purchase.#list.find((item) => item.id === id)
+  }
+
+  static updateById = (id, data) => {
+    const purchase = Purchase.getById(id)
+
+    if (purchase) {
+      if (data.firstname)
+        purchase.firstname = data.firstname
+      if (data.lastname) purchase.lastname = data.lastname
+      if (data.phone) purchase.phone = data.phone
+      if (data.email) purchase.email = data.email
+
+      return true
+    } else {
+      return false
+    }
+  }
+}
+
 // ================================================================
 
 // router.get Створює нам один ентпоїнт
@@ -231,7 +293,7 @@ router.post('/purchase-create', function (req, res) {
       data: {
         message: 'Помилка',
         info: 'Некоректна кількість товару',
-        link: `/purchase-product?id=${id}`,
+        link: `/purchase-create?id=${id}`,
       },
     })
   }
@@ -246,23 +308,144 @@ router.post('/purchase-create', function (req, res) {
       data: {
         message: 'Помилка',
         info: 'Такої кількості товару немає в наявності',
-        link: `/purchase-product?id=${id}`,
+        link: `/purchase-create?id=${id}`,
       },
     })
   }
 
   console.log(product, amount)
 
+  const productPrice = product.price * amount
+  const totalPrice = productPrice + Purchase.DELIVERY_PRICE
+
   // res.render генерує нам HTML сторінку
 
   // ↙️ cюди вводимо назву файлу з сontainer
-  res.render('purchase-product', {
+  res.render('purchase-create', {
     // вказуємо назву папки контейнера, в якій знаходяться наші стилі
-    style: 'purchase-product',
+    style: 'purchase-create',
 
     data: {
-      list: Product.getRandomList(id),
-      product: Product.getById(id),
+      id: product.id,
+
+      cart: [
+        {
+          text: `${product.title} (${amount} шт)`,
+          price: productPrice,
+        },
+        {
+          text: `Доставка`,
+          price: Purchase.DELIVERY_PRICE,
+        },
+      ],
+      totalPrice,
+      productPrice,
+      deliveryPrice: Purchase.DELIVERY_PRICE,
+      amount,
+    },
+  })
+  // ↑↑ сюди вводимо JSON дані
+})
+
+// ================================================================
+
+// router.get Створює нам один ентпоїнт
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+router.post('/purchase-submit', function (req, res) {
+  const id = Number(req.query.id)
+
+  let {
+    totalPrice,
+    productPrice,
+    deliveryPrice,
+    amount,
+
+    firstname,
+    lastname,
+    email,
+    phone,
+  } = req.body
+
+  const product = Product.getById(id)
+
+  if (!product) {
+    return res.render('alert', {
+      style: 'alert',
+
+      data: {
+        message: 'Помилка',
+        info: 'Товар не знайдено',
+        link: `/purchase-list`,
+      },
+    })
+  }
+
+  totalPrice = Number(totalPrice)
+  productPrice = Number(productPrice)
+  deliveryPrice = Number(deliveryPrice)
+  amount = Number(amount)
+
+  if (
+    isNaN(totalPrice) ||
+    isNaN(productPrice) ||
+    isNaN(deliveryPrice) ||
+    isNaN(amount)
+  ) {
+    return res.render('alert', {
+      style: 'alert',
+
+      data: {
+        message: 'Помилка',
+        info: 'Некоректні дані',
+        link: `/purchase-list`,
+      },
+    })
+  }
+
+  if (!firstname || !lastname || !email || !phone) {
+    return (
+      res.render('alert'),
+      {
+        style: 'alert',
+
+        data: {
+          message: `Заповніть обов'язкові поля`,
+          info: 'Некоректні дані',
+          link: `/purchase-list`,
+        },
+      }
+    )
+  }
+
+  const purchase = Purchase.add(
+    {
+      totalPrice,
+      productPrice,
+      deliveryPrice,
+      amount,
+
+      firstname,
+      lastname,
+      email,
+      phone,
+    },
+    product,
+  )
+
+  console.log(purchase)
+
+  // res.render генерує нам HTML сторінку
+
+  // ↙️ cюди вводимо назву файлу з сontainer
+  res.render('alert', {
+    // вказуємо назву папки контейнера, в якій знаходяться наші стилі
+    style: 'alert',
+
+    data: {
+      message: 'Успішно',
+      info: 'Замовлення створено',
+      link: `/purchase-list`,
     },
   })
   // ↑↑ сюди вводимо JSON дані
