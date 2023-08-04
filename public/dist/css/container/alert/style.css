@@ -50,4 +50,46 @@
   background-color: #007bff; /* Колір фону кнопки */
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 16px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  margin: 32px;
+  border: 1px solid;
+  box-shadow: 3px 1px 10px 1px rgba(158, 158, 158, 0.252);
+  border-radius: 5px;
+}
+.alert__info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.alert__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.alert__text {
+  font-size: 16px;
+}
+.alert__button {
+  text-decoration: none;
+  padding: 8px 60px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 /*# sourceMappingURL=style.css.map */

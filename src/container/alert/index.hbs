@@ -1,9 +1,10 @@
-<div class="card">
-	<div class="card__header">
-		<h2 class="card__title">{{data.message}}</h2>
-		<h3 class="card__subtitle">{{data.info}}</h3>
+<main class='main'>
+	{{!-- <h1 class='title'>{{title}}</h1> --}}
+	<div class='alert'>
+		<div class='alert__info'>
+			<h2 class='alert__title'>{{title}}</h2>
+			<p class='alert__text'>{{info}}</p>
+		</div>
+		<a class='alert__button' href='{{href}}'>Повернутись назад</a>
 	</div>
-	<a href="{{data.link}}" class="card__button card__button__blue">Повернутись назад</a>
-</div>
-
-{{> heading}}
+</main>
