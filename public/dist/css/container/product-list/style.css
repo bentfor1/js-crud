@@ -1,3 +1,4 @@
+3-purchase
 /* Error: Undefined mixin.
  *    ,
  * 69 |     @include s.click;
@@ -15,3 +16,7 @@ body::before {
   border-bottom: 2px solid black;
   content: "Error: Undefined mixin.\a    \2577 \a 69 \2502      @include s.click;\d\a    \2502      ^^^^^^^^^^^^^^^^\a    \2575 \a   src\\container\\product-list\\style.scss 69:5  root stylesheet";
 }
+=======
+
+
+/*# sourceMappingURL=style.css.map */

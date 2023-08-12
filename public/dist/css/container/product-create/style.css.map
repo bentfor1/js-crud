@@ -1,1 +1,4 @@
+ 3-purchase
 {"version":3,"sourceRoot":"","sources":["../../../../../src/container/product-create/style.scss"],"names":[],"mappings":"AAEA;EACE;EACA;EACA;EACA;;;AAGF;EAEE;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;;;AAEF;EACE;EACA;EACA;EACA;;AAEA;EAEE;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;;AAGF;EACE;EACA;EACA;;AAEF;EAEE;;AAEF;EACE;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;;AAEF;EAEE;;AAEF;EAGE;EACA;EACA","file":"style.css"}
+=======
+{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"style.css"}

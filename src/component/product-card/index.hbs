@@ -1,0 +1,24 @@
+<div class="form">
+	<h1 class="form__title">Список товарів</h1>
+	<div class="user-list">
+		{{#with data.products}}
+		{{#if isEmpty}}
+		<mark>пустий</mark>
+		{{else}}
+		<div>
+			{{#each list2}}
+			<div class="card2">
+				<h2 class="form__title">{{name}}</h2>
+				<p>{{description}}</p>
+				<p>ID: {{id}}</p>
+				<div class="block2">
+					<p>{{price}}грн</p>
+					<a href="/product-edit?id={{id}}">Редагувати</a>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		{{/with}}
+	</div>
+</div>
