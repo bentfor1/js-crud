@@ -1,3 +1,65 @@
+ 3-purchase
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 16px;
+}
 
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
 
-/*# sourceMappingURL=style.css.map */
+.product {
+  margin: 32px;
+  border: 1px solid;
+  box-shadow: 3px 1px 10px 1px rgba(158, 158, 158, 0.252);
+  border-radius: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 32px;
+}
+.form__title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
+.form__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  gap: 40px;
+}
+.form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form__label {
+  font-size: 14px;
+}
+.form__input {
+  border: 1px solid;
+  padding: 8px;
+  border-radius: 5px;
+}
+.form__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+.form__info {
+  font-size: 12px;
+}
+.form__button {
+  border: 1px solid;
+  padding: 8px;
+  border-radius: 4px;
+}
